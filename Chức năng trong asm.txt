@@ -1,0 +1,6 @@
+- Các chức năng em đã làm được trong ASM 2: 
++ Thêm, sửa, xóa
++ Đăng kí, đăng nhập, authorization
++ Tìm kiếm
++ Upload ảnh lên cloudinary
++ Chi tiết sản phẩm
