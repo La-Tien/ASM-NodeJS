@@ -4,3 +4,4 @@
 + Tìm kiếm
 + Upload ảnh lên cloudinary
 + Chi tiết sản phẩm
++ Hiển thị danh mục sản phẩm
