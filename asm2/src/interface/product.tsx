@@ -14,6 +14,7 @@ export interface IProps {
     onRemove: (id: number ) => void,
 }
 export interface IPropsAdd {
+    products: IProduct[],
     onAdd: (product: IProduct) => void,
 }
 

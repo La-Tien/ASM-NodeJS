@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button, Form, Input, Select, InputNumber, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload } from 'antd';
 // import type { UploadFile } from 'antd/es/upload/interface';
-import { IPropsAdd } from '../../../interface/product';
+import { IProduct, IPropsAdd } from '../../../interface/product';
 import { useNavigate } from 'react-router-dom';
 import { ICategory } from '../../../interface/category';
 import { getAllCategory } from '../../../api/category';
@@ -12,18 +12,22 @@ import axios from 'axios';
 // import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile } from 'antd/es/upload/interface';
 import instance from '../../../api/instance';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-// import {yupResolver} from '@hookform/resolvers/yup'
-// import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from "yup";
 
-// const schema = Yup.object({
-//   name: Yup.string().required(),
-//   price: Yup.number().required(),
-//   images: Yup.string().required(),
-//   desc: Yup.string().required(),
-//   categoryId: Yup.number().positive().integer().required(),
-// }).required();
-// type TCheck = Yup.InferType<typeof schema>;
+const text= {
+    "color":"red",
+}
+const schema = Yup.object({
+    name: Yup.string().required(),
+    price: Yup.number().required(),
+    images: Yup.string().required(),
+    desc: Yup.string().required(),
+    categoryId: Yup.string().required(),
+}).required();
+type TCheck = Yup.InferType<typeof schema>;
 
 
 
@@ -31,27 +35,7 @@ const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
 };
-
-const validateMessages = {
-    required: '${label} is required!',
-    types: {
-        email: '${label} is not a valid email!',
-        number: '${label} is not a valid number!',
-    },
-    number: {
-        range: '${label} must be between ${min} and ${max}',
-    },
-};
-
-
-
-
-
-
-const Add = (props: IPropsAdd) => {
-    // const [loading, setLoading] = useState(false);
-    // const [imageUrl, setImageUrl] = useState<string>();
-
+const Add = (props) => {
     const [images, setImages] = useState("");
     console.log(images)
     const [categories, setCategories] = useState<ICategory[]>([]);
@@ -65,7 +49,11 @@ const Add = (props: IPropsAdd) => {
 
     const navigate = useNavigate();
 
-
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<TCheck>({ resolver: yupResolver(schema) })
 
     const uploadFiles = async () => {
         // if () {
@@ -91,9 +79,9 @@ const Add = (props: IPropsAdd) => {
         }
             // ).then((response) => console.log(response)
         )
-        .then(({ data }) => setImages(data.secure_url))
+        // .then(({ data }) => setImages(data.secure_url))
         // .then(( data ) => urls.push(data.secure_url))
-// console.log("response", response);
+        // console.log("response", response);
 
         // urls.push(response.data.secure_url)
 
@@ -102,92 +90,70 @@ const Add = (props: IPropsAdd) => {
     }
 
 
-    // }
-
-    const normFile = (e: any) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e?.fileList;
-    };
-    const onFinish = (values: any) => {
-        console.log("Them thanh cong: ", values);
+    const onSubmit: SubmitHandler<IProduct> = (data: IProduct) => {
+        console.log("Them thanh cong: ", data);
         const urls = uploadFiles();
         // instance.post('/image/upload', urls);
-        props.onAdd(values);
+        if (confirm("Thêm sản phẩm thành công"))
+            props.onAdd(data);
         navigate('/admin/products')
     };
-    const onHandleSubmit = (e) => {
-        e.preventDefault();
-
-    }
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm()
-
     return (
         <div>
             <h1>Add new product</h1>
             <form
-
+                method='post'
+                action='http://localhost:8080/api/image/upload'
                 {...layout}
                 name="nest-messages"
 
-                onSubmit={handleSubmit(onFinish)}
+                onSubmit={handleSubmit(onSubmit)}
                 style={{ maxWidth: 600 }}
-                defaultValue={`${validateMessages}`}
+            // defaultValue={`${validateMessages}`}
             >
-                <Form.Item label="Name" rules={[{ required: true, message: "Ten khong duoc de trong" }]}>
-                    <input {...register("name", { required: true, })} />
+                <div className="mb-3">
+                    <label className="form-label">Name</label>
+                    <input className="form-control" {...register("name", { required: true })} />
+                    <p  style={text}>
+                        {errors.name?.message}
+                    </p>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Price</label>
+                    <input className="form-control" type='number' {...register("price", { required: true })} />
 
-                </Form.Item>
+                    <p  style={text}>{errors.price?.message}</p>
 
-                <Form.Item label="Price" rules={[{ required: true }]}>
-                    <input type='number' {...register("price")}
-                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Image</label>
+                    <input className="form-control" type='file'{...register("images", { required: true })} multiple onChange={(event: any) => setImages(event.target.files[0])} />
+                    <p  style={text}>{errors.images?.message}</p>
 
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Category</label>
+                    <select className="form-control"
+                        {...register("categoryId", { required: true })}
 
-                </Form.Item>
-
-                <Form.Item
-                    valuePropName="fileList"
-                    getValueFromEvent={normFile}
-                    label="Image"
-
-                // rules={[{ required: true }]}
-                >
-
-                    <input type='file'{...register("images")} multiple onChange={(event: any) => setImages(event.target.files[0])} />
-
-
-                </Form.Item>
-
-                <Form.Item label="Category" rules={[{ required: true }]}>
-                    <select
-                        {...register("categoryId")}
-                    // value={categories}
                     >
                         {categories.map((item) => (
                             <option key={item._id} value={item._id} > {item.name}</option>
 
                         ))}
                     </select>
+                    <p  style={text}>{errors.categoryId?.message}</p>
 
+                </div><div className="mb-3">
+                    <label className="form-label">Description</label>
+                    <textarea className="form-control" {...register("desc", { required: true })} />
+                    <p style={text}>{errors.desc?.message}</p>
 
-                </Form.Item>
+                </div>
 
-                <Form.Item label="Description" rules={[{ required: true }]}>
-                    <textarea  {...register("desc")} />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button onClick={uploadFiles} type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
+                <Button onClick={uploadFiles} type="primary" htmlType="submit">
+                    Submit
+                </Button>
             </form>
         </div >
     )

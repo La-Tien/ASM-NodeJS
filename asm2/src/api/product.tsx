@@ -1,26 +1,14 @@
 import { IProduct } from "../interface/product"
 import instance from "./instance"
 
-const { accessToken } = JSON.parse(localStorage.getItem('user')!);
+const {accessToken} = JSON.parse(localStorage.getItem('user')!);
 
 export const getAll = () => {
-    return instance.get('/product', 
-    {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    }
-    )
+    return instance.get('/product')
 }
 
 export const get = (id: number | string) => {
-    return instance.get(`/product/${id}`,
-     {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    }
-    )
+    return instance.get(`/product/${id}`)
 }
 
 export const create = (products: IProduct) => {

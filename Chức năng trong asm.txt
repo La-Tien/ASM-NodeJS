@@ -1,7 +1,9 @@
 - Các chức năng em đã làm được trong ASM 2: 
-+ Thêm, sửa, xóa
++ Thêm, sửa, xóa sản phẩm
 + Đăng kí, đăng nhập, authorization
 + Tìm kiếm
 + Upload ảnh lên cloudinary
 + Chi tiết sản phẩm
-+ Hiển thị danh mục sản phẩm
++ Hiển thị sản phẩm có trong danh mục
++ Validate form
++ Thêm, xóa danh mục

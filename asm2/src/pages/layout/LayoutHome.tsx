@@ -130,8 +130,8 @@ const LayoutHome = (props: IProps) => {
                   </div>
                   <div className="top_bar_user">
                     <div className="user_icon"><img src="images/user.svg" alt="" /></div>
-                    <div><a href="/signin">Register</a></div>
-                    <div><a href="/signup">Sign in</a></div>
+                    <div><a href="/signup">Register</a></div>
+                    <div><a href="/signin">Sign in</a></div>
                   </div>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import {
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
+  LineChartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -28,15 +29,17 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Dashboard', '1',  <Link to={'/admin'}/>),
-  getItem('Product Management', '2',  <Link to={'/admin/products'}/>),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
+  getItem('Thống kê', '1', <Link to={'/admin'} />),
+  getItem('Quản lí', 'sub1',  <LineChartOutlined />, [
+    getItem('Sản phẩm', '3',  <Link to={'/admin/products'} />,),
+    getItem('Danh mục', '4',  <Link to={'/admin/category'} />,)]),
+  getItem('User', 'sub2', <UserOutlined />, [
+    getItem('Admin', '5', <Link to={'/admin'} />,),
+    getItem('Member', '6', <Link to={'/'} />)
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
+  // getItem('Team', '',,
+
+  // getItem('Files', '9', <FileOutlined />),
 ];
 
 const LayoutAdmin: React.FC = () => {
@@ -59,7 +62,7 @@ const LayoutAdmin: React.FC = () => {
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
-           <Outlet/>
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>

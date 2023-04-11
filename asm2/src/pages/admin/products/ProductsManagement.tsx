@@ -6,8 +6,16 @@ import { Button, Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useForm } from 'react-hook-form';
 import { getAll } from '../../../api/product';
+import { ICategory } from '../../../interface/category';
+import { getAllCategory } from '../../../api/category';
 
 const ProductsManagement = (props: IProps) => {
+    const [category, setCategory] = useState<ICategory[]>([])
+    useEffect(() => {
+        getAllCategory().then(({ data }) => setCategory(data))
+    }, [])
+
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const columns: ColumnsType<IProduct> = [
         {
@@ -29,13 +37,13 @@ const ProductsManagement = (props: IProps) => {
             title: 'Image',
             dataIndex: '',
             key: '',
-            render: (record: IProduct) => <img src={`${record.images}`} alt="no image" width={150} height={100}/>
+            render: (record: IProduct) => <img src={`${record.images}`} alt="no image" width={150} height={100} />
         },
         {
             title: 'Category',
-            dataIndex: '',
-            key: '',
-            render: (record: IProduct) => <p key={record._id}>{record.name}</p>
+            dataIndex: 'categoryId',
+            key: 'categoryId',
+            // render: (record: ICategory) => <p key={record._id}>{record.name}</p>
         },
 
         {
@@ -51,20 +59,17 @@ const ProductsManagement = (props: IProps) => {
         },
     ];
 
-    
+
     const Remove = (id: number) => {
         props.onRemove(id)
         console.log(id)
     }
-    //   Search
     const [product, setProduct] = useState<IProduct[]>([]);
     useEffect(() => {
         setProduct(props.products);
     }, [props.products])
     const fethData = (value: any) => {
-        getAll().then(({ data }) =>
-       
-        {
+        getAll().then(({ data }) => {
             const results = data.filter((data: any) => {
                 return (value && data && data.name.toLowerCase().includes(value))
             })
@@ -72,33 +77,52 @@ const ProductsManagement = (props: IProps) => {
         })
     }
     const [input, setInput] = useState([]);
-    // console.log(input);
     const handleChange = (value: any) => {
-        // setInput(value);
         setInput(value);
         if (value === "") {
             setProduct(props.products)
         } else {
             fethData(value);
         }
-        // fethData(value)
 
     }
     const products: IProduct[] = product.map((item: IProduct) => {
-        // console.log(item)
         return {
             key: item._id,
             ...item
         }
     });
+    // const Category = () =>{
+    const filterCatIdPro = (_id) => {
+        if (product.length > 1) {
+            const result = product.filter((product) => {
+                return product.categoryId === _id;
+            })
+            setProduct(result)
+        } else {
+            console.log('no products to filter')
+        }
+
+    }
+    // }
     return (
         <div>
-            <Link to={'/admin/products/add'}>Add new product</Link>
-            <form>
-                <input className="my-3" placeholder='Search...' value={input} onChange={(e) => handleChange(e.target.value)}>
-                </input>
-            </form>
-            {/* </form> */}
+            <div>
+                <div >
+                    <Link to={'/admin/products/add'}>Add new product</Link>
+                    <form>
+                        <input className="my-3" placeholder='Search...' value={input} onChange={(e) => handleChange(e.target.value)}>
+                        </input>
+                    </form>
+                </div>
+                {/* </form> */}
+                <div>
+                    {category.map((item: ICategory) => (
+                        <Button onClick={() => filterCatIdPro(item._id)}>{item.name}</Button>
+                    ))}
+                </div>
+            </div>
+            <br /><br />
             <Table
                 columns={columns}
                 expandable={{

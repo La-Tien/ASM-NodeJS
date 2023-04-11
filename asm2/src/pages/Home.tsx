@@ -4,7 +4,12 @@ import ProductPage from './Products'
 import { IProduct } from '../interface/product'
 import ProductsList from './layout/ProductsList'
 import { Pagination } from 'antd'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
+const background = {
+    "background-image":"url(images/banner_2_background.jpg)",
+    
+}
 type Props = {}
 
 const HomePage = (props: Props) => {
@@ -14,15 +19,21 @@ const HomePage = (props: Props) => {
         <div>
 
             {/* <!-- Banner --> */}
-
-            <div className="banner">
-                <div className="banner_background"></div>
-                <div className="container fill_height">
+            <div className="home">
+				<div className="home_background parallax-window" data-parallax="scroll" data-image-src="../images/shop_background.jpg"></div>
+				<div className="home_overlay"></div>
+				<div className="home_content d-flex flex-column align-items-center justify-content-center">
+					<h2 className="home_title">new era of smartphones</h2>
+				</div>
+			</div>
+            {/* <div className="banner">
+                <div className="banner_background"> <img className="img-fluid" src="https://www.bidv.com.vn/wps/wcm/connect/ae18b135-5a31-43d2-96d9-f080c02e1b0f/Banner+web_1440+x+500.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE-ae18b135-5a31-43d2-96d9-f080c02e1b0f-nQJpvGz" alt=""/></div>
+                <div className="container fill_height ">
                     <div className="row fill_height">
-                        <div className="banner_product_image"><img src="images/banner_product.png" alt="" /></div>
+                        <div className="banner_product_image"></div>
                         <div className="col-lg-5 offset-lg-4 fill_height">
                             <div className="banner_content">
-                                <h1 className="banner_text">new era of smartphones</h1>
+                                <h1 className="banner_text ">new era of smartphones</h1>
                                 <div className="banner_price"><span>$530</span>$460</div>
                                 <div className="banner_product_name">Apple Iphone 6s</div>
                                 <div className="button banner_button"><a href="#">Shop Now</a></div>
@@ -30,7 +41,7 @@ const HomePage = (props: Props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* <!-- Characteristics --> */}
 
             <div className="characteristics">
@@ -90,164 +101,15 @@ const HomePage = (props: Props) => {
 
             <div className="deals_featured">
                 <div className="container">
-                    <div className="row">
-                        <div className="col d-flex flex-lg-row flex-column align-items-center justify-content-start">
+                    {/* <div className="row"> */}
+                        {/* <div className="col d-flex flex-lg-row flex-column align-items-center justify-content-start"> */}
 
                             {/* <!-- Deals --> */}
 
-                            <div className="deals">
-                                <div className="deals_title">Deals of the Week</div>
-                                <div className="deals_slider_container">
-
-                                    {/* <!-- Deals Slider --> */}
-                                    <div className="owl-carousel owl-theme deals_slider">
-
-                                        {/* <!-- Deals Item --> */}
-                                        <div className="owl-item deals_item">
-                                            <div className="deals_image">
-                                                <img src="https://res.cloudinary.com/duqn6uvp2/image/upload/v1677193002/THITHU/ehrgfuailahevhct3abq.jpg" alt="" />
-                                            </div>
-                                            <div className="deals_content">
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_category"><a href="#">Headphones</a></div>
-                                                    <div className="deals_item_price_a ml-auto">$300</div>
-                                                </div>
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_name">Beoplay H7</div>
-                                                    <div className="deals_item_price ml-auto">$225</div>
-                                                </div>
-                                                <div className="available">
-                                                    <div className="available_line d-flex flex-row justify-content-start">
-                                                        <div className="available_title">Available: <span>6</span></div>
-                                                        <div className="sold_title ml-auto">Already sold: <span>28</span></div>
-                                                    </div>
-                                                    <div className="available_bar"><span></span></div>
-                                                </div>
-                                                <div className="deals_timer d-flex flex-row align-items-center justify-content-start">
-                                                    <div className="deals_timer_title_container">
-                                                        <div className="deals_timer_title">Hurry Up</div>
-                                                        <div className="deals_timer_subtitle">Offer ends in:</div>
-                                                    </div>
-                                                    <div className="deals_timer_content ml-auto">
-                                                        <div className="deals_timer_box clearfix" data-target-time="">
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer1_hr" className="deals_timer_hr"></div>
-                                                                <span>hours</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer1_min" className="deals_timer_min"></div>
-                                                                <span>mins</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer1_sec" className="deals_timer_sec"></div>
-                                                                <span>secs</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* <!-- Deals Item --> */}
-                                        <div className="owl-item deals_item">
-                                            <div className="deals_image"><img src="https://res.cloudinary.com/duqn6uvp2/image/upload/v1677193002/THITHU/ehrgfuailahevhct3abq.jpg" alt="" /></div>
-                                            <div className="deals_content">
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_category"><a href="#">Headphones</a></div>
-                                                    <div className="deals_item_price_a ml-auto">$300</div>
-                                                </div>
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_name">Beoplay H7</div>
-                                                    <div className="deals_item_price ml-auto">$225</div>
-                                                </div>
-                                                <div className="available">
-                                                    <div className="available_line d-flex flex-row justify-content-start">
-                                                        <div className="available_title">Available: <span>6</span></div>
-                                                        <div className="sold_title ml-auto">Already sold: <span>28</span></div>
-                                                    </div>
-                                                    <div className="available_bar"><span className='style' ></span></div>
-                                                </div>
-                                                <div className="deals_timer d-flex flex-row align-items-center justify-content-start">
-                                                    <div className="deals_timer_title_container">
-                                                        <div className="deals_timer_title">Hurry Up</div>
-                                                        <div className="deals_timer_subtitle">Offer ends in:</div>
-                                                    </div>
-                                                    <div className="deals_timer_content ml-auto">
-                                                        <div className="deals_timer_box clearfix" data-target-time="">
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer2_hr" className="deals_timer_hr"></div>
-                                                                <span>hours</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer2_min" className="deals_timer_min"></div>
-                                                                <span>mins</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer2_sec" className="deals_timer_sec"></div>
-                                                                <span>secs</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* <!-- Deals Item --> */}
-                                        <div className="owl-item deals_item">
-                                            <div className="deals_image"><img src="https://res.cloudinary.com/duqn6uvp2/image/upload/v1677193002/THITHU/ehrgfuailahevhct3abq.jpg" alt="" /></div>
-                                            <div className="deals_content">
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_category"><a href="#">Headphones</a></div>
-                                                    <div className="deals_item_price_a ml-auto">$300</div>
-                                                </div>
-                                                <div className="deals_info_line d-flex flex-row justify-content-start">
-                                                    <div className="deals_item_name">Beoplay H7</div>
-                                                    <div className="deals_item_price ml-auto">$225</div>
-                                                </div>
-                                                <div className="available">
-                                                    <div className="available_line d-flex flex-row justify-content-start">
-                                                        <div className="available_title">Available: <span>6</span></div>
-                                                        <div className="sold_title ml-auto">Already sold: <span>28</span></div>
-                                                    </div>
-                                                    <div className="available_bar"><span ></span></div>
-                                                </div>
-                                                <div className="deals_timer d-flex flex-row align-items-center justify-content-start">
-                                                    <div className="deals_timer_title_container">
-                                                        <div className="deals_timer_title">Hurry Up</div>
-                                                        <div className="deals_timer_subtitle">Offer ends in:</div>
-                                                    </div>
-                                                    <div className="deals_timer_content ml-auto">
-                                                        <div className="deals_timer_box clearfix" data-target-time="">
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer3_hr" className="deals_timer_hr"></div>
-                                                                <span>hours</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer3_min" className="deals_timer_min"></div>
-                                                                <span>mins</span>
-                                                            </div>
-                                                            <div className="deals_timer_unit">
-                                                                <div id="deals_timer3_sec" className="deals_timer_sec"></div>
-                                                                <span>secs</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div className="deals_slider_nav_container">
-                                    <div className="deals_slider_prev deals_slider_nav"><i className="fas fa-chevron-left ml-auto"></i></div>
-                                    <div className="deals_slider_next deals_slider_nav"><i className="fas fa-chevron-right ml-auto"></i></div>
-                                </div>
-                            </div>
+                            
 
                             {/* <!-- Featured --> */}
-                            <div className="featured">
+                            {/* <div className="featured"> */}
                                 <div className="tabbed_container">
                                     <div className="tabs">
                                         <ul className="clearfix">
@@ -397,11 +259,11 @@ const HomePage = (props: Props) => {
                                         <div className="featured_slider_dots_cover"></div>
                                     </div>
                                     {/* <!-- Product Panel --> */}
-                                </div>
+                                {/* </div> */}
                             </div>
 
-                        </div>
-                    </div>
+                        {/* </div> */}
+                    {/* </div> */}
                 </div>
             </div>
 

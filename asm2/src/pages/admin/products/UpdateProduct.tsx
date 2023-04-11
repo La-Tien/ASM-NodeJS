@@ -64,6 +64,8 @@ const UpdateProduct = (props) => {
 
   const onSubmit: SubmitHandler<IProduct> = data => {
     console.log('data', data);
+    if(confirm("Cập nhật sản phẩm thành công"))
+
     props.onUpdate(data);
     navigate('/admin/products')
 

@@ -12,7 +12,7 @@ import Dashboard from './pages/admin/Dashboard'
 import ProductsManagement from './pages/admin/products/ProductsManagement'
 // import addProduct from './pages/admin/products/AddProduct'
 import UpdateProduct from './pages/admin/products/UpdateProduct'
-import { getAllCategory } from './api/category'
+import { createCategory, deleteCategory, getAllCategory, updateCategory } from './api/category'
 import LayoutHome from './pages/layout/LayoutHome'
 import CategoryPage from './pages/admin/category/Category'
 import AddCategory from './pages/admin/category/AddCategory'
@@ -32,7 +32,7 @@ function App() {
 
   const [product, setProduct] = useState<IProduct[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
-  const [category, setCategory] = useState<ICategory[]>([])
+  const [categorys, setCategory] = useState<ICategory[]>([])
   useEffect(() => {
     getAll().then(({ data }) => setProduct(data));
     // console.log("product", product)
@@ -67,35 +67,26 @@ function App() {
     get(id)
   }
   const onHandleRemove = async (id: number) => {
+    if(confirm("Xác nhận bạn muốn xóa sản phẩm? "))
     remove(id).then(() => setProduct(product.filter((item: IProduct) => item._id !== id)))
   }
   const onHandleAdd = async (products: IProduct) => {
-    create(products).then(() => getAll().then(({ data }) => setProduct(data)))
+    create(products).then(() => getAll().then(({ data }) =>  setProduct(data)))
   }
-  // const onHandleAdd = async (products: IProduct) => {
-  //   try {
-  //     const { data } = await create(products);
-  //     if (data) {
-  //       setProduct([...product, data])
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   const onHandleUpdate = async (products: IProduct) => {
     update(products).then(() => setProduct(product.map((item) => item._id === products._id ? products : item)))
   }
-  // const onHandleUpdate = async (products: IProduct) => {
-  //   try {
+  const onHandleCategory = (category: ICategory) =>{
+    createCategory(category).then(() => getAll().then(({ data }) =>  setCategory(data)))
 
-  //     const { data } = await update(products)
-  //     // if (data) {
-  //     console.log(data)
-  //     // }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  }
+  const onHandleRemoveCat = (id: number)=>{
+    if(confirm('Xác nhận bạn muốn xóa danh mục?'))
+    deleteCategory(id).then(() => setCategory(categorys.filter((item: ICategory) => item._id !== id)))
+  }
+  const onHandleUpdateCat = (category: ICategory) =>{
+    updateCategory(category).then(() => setCategory(categorys.map((item) => item._id === category._id ? category : item)))
+  }
   const onHandleLogin = async (user: IUser) => {
     try {
       const { data } = await login(user)
@@ -141,9 +132,10 @@ function App() {
             <Route path='update/:id' element={<UpdateProduct onUpdate={onHandleUpdate} products={product} />} />
           </Route>
 
-          <Route path='category'>
-            <Route index element={<CategoryPage />} />
-            <Route path='add' element={<AddCategory />} />
+          <Route path='Category'>
+            <Route index element={<CategoryPage categorys={categorys} onRemoveCat={onHandleRemoveCat} />} /> 
+            <Route path='add' element={<AddCategory onAddCategory={onHandleCategory} />} />
+            <Route path='update/:id' element={<UpdateProduct onUpdateCat={onHandleUpdateCat} categorys={categorys} />} />
 
           </Route>
         </Route>

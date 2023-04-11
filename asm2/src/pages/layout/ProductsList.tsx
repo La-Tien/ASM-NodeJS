@@ -12,6 +12,9 @@ type TProps = {
     products: IProduct[]
 }
 
+const img = {
+    "overflow": "hidden"
+}
 const ProductsList = () => {
     const [product, setProduct] = useState<IProduct[]>([]);
 
@@ -37,8 +40,8 @@ const ProductsList = () => {
                 dataSource={data}
                 renderItem={(item) => (
                     <List.Item>
-                        <Card >
-                            <Image src={`${item.images}`} alt="" width={150} height={200}/>
+                        <Card  style={img}>
+                            <Image src={`${item.images}`} alt="" width={200} height={250}  />
 
                             <h1><Link href={`/Products/${item.key}`} >{item.name} </Link></h1>
 

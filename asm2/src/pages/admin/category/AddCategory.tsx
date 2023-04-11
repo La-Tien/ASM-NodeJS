@@ -1,30 +1,36 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ICategory } from '../../../interface/category';
+import { useNavigate } from 'react-router-dom';
 
-const AddCategory = () => {
-    
-    const { register, formState: { errors } } = useForm()
+type ICat = {
+    onAddCategory(category: ICategory)
+}
+const AddCategory = (props: ICat) => {
 
+    const { register, handleSubmit, formState: { errors } } = useForm()
+
+    const navigate = useNavigate()
+    const onSubmit: SubmitHandler<ICategory> = (data: ICategory) => {
+        console.log(data)
+        props.onAddCategory(data)
+        navigate('/admin')
+    }
     return (
         <div>
             <h1>Add new category</h1>
-            <Form
+            <form
+                onSubmit={handleSubmit(onSubmit)}
             >
-                <Form.Item
-                    label="Category name"
-
-                    rules={[{ required: true, message: 'Please input your category!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+                <div className="mb-3">
+                    <label className="form-label">Name</label>
+                    <input className="form-control" {...register("name", { required: true })} />
+                </div>
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </form>
         </div>
 
     )
