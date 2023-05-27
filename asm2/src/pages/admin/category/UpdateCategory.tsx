@@ -7,15 +7,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateCategory = (props) => {
 
-    const { register, handleSubmit,reset, formState: { errors } } = useForm()
+    const { register, handleSubmit,reset, formState: { errors } } = useForm<ICategory>()
 
     const navigate = useNavigate()
 
     const { id } = useParams();
   useEffect(() => {
-    const currentProduct = props.categorys.find((cat: ICategory) => cat._id == id);
-    console.log("currentProduct", currentProduct)
-    reset(currentProduct)
+    const currentCategory = props.categorys.find((cat) => cat._id == id);
+    console.log("currentCategory", currentCategory)
+    reset(currentCategory)
   }, [props])
     const onSubmit: SubmitHandler<ICategory> = data => {
         console.log(data)
